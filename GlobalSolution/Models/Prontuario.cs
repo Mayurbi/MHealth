@@ -8,7 +8,7 @@ namespace GlobalSolution.Models
     {
         [Key]
         [ForeignKey("Paciente")] 
-        public long PacienteId { get; set; }
+        public string PacienteId { get; set; }
         [Required]
         public string Receitas { get; set; }
         [Required]

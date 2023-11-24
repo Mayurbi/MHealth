@@ -278,3 +278,4 @@ C:\Users\cachi\source\repos\GlobalSolution\GlobalSolution\bin\Debug\net8.0\Micro
 C:\Users\cachi\source\repos\GlobalSolution\GlobalSolution\bin\Debug\net8.0\Microsoft.AspNetCore.Components.QuickGrid.EntityFrameworkAdapter.dll
 C:\Users\cachi\source\repos\GlobalSolution\GlobalSolution\bin\Debug\net8.0\Microsoft.AspNetCore.Identity.EntityFrameworkCore.dll
 C:\Users\cachi\source\repos\GlobalSolution\GlobalSolution\bin\Debug\net8.0\Microsoft.AspNetCore.Identity.UI.dll
+C:\Users\cachi\source\repos\GlobalSolution\GlobalSolution\obj\Debug\net8.0\GlobalSolution.sourcelink.json

@@ -1,77 +1,121 @@
-﻿using GlobalSolution.Areas.Identity.Data.Persistence.Repositorys;
+﻿using GlobalSolution.Areas.Identity.Data;
 using Microsoft.AspNetCore.Mvc;
+using GlobalSolution.Models;
 using Neo4jClient.DataAnnotations.Cypher.Functions;
+using AutoMapper;
+using Microsoft.AspNetCore.JsonPatch;
+using Microsoft.EntityFrameworkCore;
+using GlobalSolution.Areas.Identity.Data.DTOs;
 
-namespace GlobalSolution.Controllers
+namespace GlobalSolution.Controllers;
+
+[Route("api/[controller]")]
+[ApiController]
+public class UsuarioController : Controller
 {
-    [Route("api/[controller]")]
-    [ApiController]
-    public class UsuarioController : Controller
+    private MySQLContext _context;
+    private IMapper _mapper;
+
+
+    public UsuarioController(MySQLContext context, IMapper mapper)
     {
-        public IActionResult Index()
-        {
-            return View();
-        }
-        private readonly IUsuarioRepository _usuarioRepository;
+        _context = context;
+        _mapper = mapper;
+    }
 
-        public UsuarioController(IUsuarioRepository usuarioRepository)
-        {
-            _usuarioRepository = usuarioRepository;
-        }
+    [HttpPost]
+    public IActionResult AdicionaUsuario([FromBody] CriarUserDto usuarioDto)
+    {
+        Usuario usuario = _mapper.Map<Usuario>(usuarioDto);
 
-        public IActionResult Listar()
-        {
-            IEnumerable<Models.Usuario> usuarios = (IEnumerable<Models.Usuario>)_usuarioRepository.GetAll();
-            return View(usuarios);
-        }
+        _context.Usuarios.Add(usuario);
+        _context.SaveChanges();
 
-        [HttpGet]
-        public ActionResult<IEnumerable<Models.Usuario>> Get()
-        {
-            var usuarios = _usuarioRepository.GetAll();
-            return Ok(usuarios);
-        }
+        return CreatedAtAction(nameof(GetUsuarioById), new { id = usuario.Id }, usuario);
+    }
 
-        [HttpGet("{id}")]
-        public ActionResult<Models.Usuario> Get(long id)
+    [HttpGet]
+    public IEnumerable<LerUserDto> GetAllUsers(
+      [FromQuery] int skip = 0,
+      [FromQuery] int take = 10,
+      [FromQuery] string? email = null
+    )
+    {
+        if (email != null)
         {
-            var usuario = _usuarioRepository.GetById(id);
-            if (usuario == null)
-                return NotFound();
-
-            return Ok(usuario);
+            return _mapper.Map<List<LerUserDto>>(_context.Usuarios.Where((usuario) => usuario.Email == email));
         }
 
-        [HttpPost]
-        public ActionResult<Models.Usuario> Post(Models.Usuario usuario)
+        return _mapper.Map<List<LerUserDto>>(_context.Users.Skip(skip).Take(take));
+    }
+
+    [HttpGet("{id}")]
+    public IActionResult GetUsuarioById(string id)
+    {
+        Usuario? usuario = _context.Usuarios.FirstOrDefault((usuario) => usuario.Id == id);
+
+        if (usuario == null)
         {
-            _usuarioRepository.Add(usuario);
-            return CreatedAtAction(nameof(Get), new { id = usuario.Id }, usuario);
+            return NotFound();
         }
 
-        [HttpPut("{id}")]
-        public ActionResult<Models.Usuario> Put(long id, Models.Usuario usuario)
+        LerUserDto usuarioDto = _mapper.Map<LerUserDto>(usuario);
+
+        return Ok(usuarioDto);
+    }
+
+    [HttpPut("{id}")]
+    public IActionResult AtualizaUsuario(string id, [FromBody] AtualizarUserDto usuarioDto)
+    {
+        Usuario? usuario = _context.Usuarios.FirstOrDefault((usuario) => usuario.Id == id);
+
+        if (usuario == null)
         {
-            var existingUsuario = _usuarioRepository.GetById(id);
-            if (existingUsuario == null)
-                return NotFound();
-
-            _usuarioRepository.Update(existingUsuario);
-
-            return NoContent();
+            return NotFound();
         }
 
-        [HttpDelete("{Id}")]
-        public ActionResult Delete(long id)
+        _mapper.Map(usuarioDto, usuario);
+        _context.SaveChanges();
+
+        return NoContent();
+    }
+
+    [HttpPatch("{id}")]
+    public IActionResult PatchUsuario(string id, JsonPatchDocument<AtualizarUserDto> patch)
+    {
+        Usuario? usuario = _context.Usuarios.FirstOrDefault((usuario) => usuario.Id == id);
+
+        if (usuario == null)
         {
-            var usuario = _usuarioRepository.GetById(id);
-            if (usuario == null)
-                return NotFound();
-
-            _usuarioRepository.Delete(usuario);
-            return RedirectToAction("Listar");
-
-            //  return NoContent();
+            return NotFound();
         }
+
+        AtualizarUserDto atualizaUsuario = _mapper.Map<AtualizarUserDto>(usuario);
+        patch.ApplyTo(atualizaUsuario, (Microsoft.AspNetCore.JsonPatch.Adapters.IObjectAdapter)ModelState);
+
+        if (!TryValidateModel(atualizaUsuario))
+        {
+            return ValidationProblem(ModelState);
+        }
+
+        _mapper.Map(atualizaUsuario, usuario);
+        _context.SaveChanges();
+        return NoContent();
+    }
+
+    [HttpDelete("{id}")]
+    public IActionResult RemoveUsuario(String id)
+    {
+        Usuario? usuario = _context.Usuarios.FirstOrDefault((usuario) => usuario.Id == id);
+
+        if (usuario == null)
+        {
+            return NotFound();
+        }
+
+        _context.Remove(usuario);
+        _context.SaveChanges();
+
+        return NoContent();
     }
 }

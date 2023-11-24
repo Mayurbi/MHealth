@@ -21,6 +21,11 @@ public class MySQLContext : IdentityDbContext<Usuario>
         base.OnModelCreating(builder);
 
     }
-
-public DbSet<GlobalSolution.Models.Paciente> Paciente { get; set; } = default!;
+ //   protected override void OnModelCreating(ModelBuilder modelBuilder)
+//    {
+  //      modelBuilder.Entity<UsuarioController>()
+   //         .Property(p => p.Classe)
+  //          .HasConversion<string>();
+  //  }
+    public DbSet<GlobalSolution.Models.Paciente> Paciente { get; set; } = default!;
 }

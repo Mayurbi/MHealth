@@ -9,11 +9,11 @@ namespace GlobalSolution.Models
     {
         [Key]
         [Required]
-        public override string? Id { get; set; }
-        [Required(ErrorMessage = "Email é obrigatório")]
+        public string Id { get; set; }
+        [Required(ErrorMessage = "Email is required")]
         [EmailAddress]
-        public override string? Email { get; set; }
-        [Required(ErrorMessage = "Senha é obrigatório")]
-        public string?  Password { get; set; }
+        public string Email { get; set; }
+        [Required(ErrorMessage = "Password is required")]
+        public string Password { get; set; }
     }
 }

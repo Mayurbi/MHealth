@@ -1,14 +1,9 @@
 ﻿using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
 
-namespace GlobalSolution.Models
+namespace GlobalSolution.Areas.Identity.Data.DTOs
 {
-    [Table("Pedidos")]
-    public class Pedido
+    public class CriarPedidoDto
     {
-        [Key]
-        [Required(ErrorMessage = "Id is required")]
-        public string Id { get; set; }
         [Required(ErrorMessage = "Nome is required")]
         public string Nome { get; set; }
         [Required(ErrorMessage = "FoiAceito is required")]
@@ -25,6 +20,5 @@ namespace GlobalSolution.Models
         public string Acompanhante { get; set; }
         [Required(ErrorMessage = "TipoComida is required")]
         public string TipoComida { get; }
-
     }
 }
