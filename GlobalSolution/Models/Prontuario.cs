@@ -7,7 +7,7 @@ namespace GlobalSolution.Models
     public class Prontuario
     {
         [Key]
-        [ForeignKey("Paciente")] 
+        //[ForeignKey("Paciente")]
         public string PacienteId { get; set; }
         [Required]
         public string Receitas { get; set; }

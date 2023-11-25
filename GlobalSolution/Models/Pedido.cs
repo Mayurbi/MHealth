@@ -25,6 +25,6 @@ namespace GlobalSolution.Models
         public string Acompanhante { get; set; }
         [Required(ErrorMessage = "TipoComida is required")]
         public string TipoComida { get; }
-
+        public string Status { get; internal set; }
     }
 }

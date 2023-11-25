@@ -5,12 +5,11 @@
 using System;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
-using GlobalSolution.Areas.Identity.Data;
+using GlobalSolution.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Logging;
-using GlobalSolution.Models;
 
 namespace GlobalSolution.Areas.Identity.Pages.Account
 {
@@ -35,6 +34,8 @@ namespace GlobalSolution.Areas.Identity.Pages.Account
             }
             else
             {
+                // This needs to be a redirect so that the browser performs a new
+                // request and the identity for the user gets updated.
                 return RedirectToPage();
             }
         }

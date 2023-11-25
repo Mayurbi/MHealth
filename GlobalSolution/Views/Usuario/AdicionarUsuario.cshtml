@@ -1,0 +1,41 @@
+﻿@model Usuario
+
+<h1>Adicionar Usuário</h1>
+
+<form asp-action="AdicionarUsuario" method="post">
+    <div>
+        <label asp-for="Email"></label>
+        <input asp-for="Email" class="form-control" />
+        <span asp-validation-for="Email" class="text-danger"></span>
+    </div>
+
+    <div>
+        <label asp-for="Password"></label>
+        <input asp-for="Password" class="form-control" />
+        <span asp-validation-for="Password" class="text-danger"></span>
+    </div>
+
+    <button type="submit">Adicionar</button>
+</form>
+
+<h1>Teste</h1>
+<h3>@ViewData["chave"]</h3>
+<h3>@ViewBag.titulo</h3>
+<h3>@TempData["mensagem"]</h3>
+
+<br />
+
+<form action="/Usuario/index">
+    <label>Nome</label>
+    <input type="text" name="nome" />
+    <br><br>
+    <label>Sobrenome</label>
+    <input type="text" name="sobrenome" />
+    <input type="submit" value="Enviar" />
+</form>
+
+<br />
+
+<h2>@ViewData["nome"]</h2>
+<h2>@ViewData["sobrenome"]</h2>
+<h2>@TempData["mensagem"]</h2>

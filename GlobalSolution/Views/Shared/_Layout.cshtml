@@ -1,5 +1,5 @@
 ﻿<!DOCTYPE html>
-<html lang="en">
+<html lang="pt-br">
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -7,12 +7,14 @@
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/GlobalSolution.styles.css" asp-append-version="true" />
+    <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" rel="stylesheet">
 </head>
 <body>
     <header>
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
             <div class="container-fluid">
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">GlobalSolution</a>
+                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">MHealth</a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
                         aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
@@ -22,9 +24,16 @@
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
                         </li>
+                        <partial name="_Loginpartial" />
+                        <br/>
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
                         </li>
+              
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-controller="Feedback" asp-action="Index">Feedback</a>
+                        </li>
+
                     </ul>
                 </div>
             </div>
@@ -32,10 +41,28 @@
     </header>
     <div class="container">
         <main role="main" class="pb-3">
+            <div>
+                <h1>Welcome to MHealth</h1>
+                <p>
+                    Objetivo: Melhorar comunicação entre paciente e enfermeiro
+                    através de um app que transmite uma requisição de Alimentos ou
+                    Reclamações de dores sentidas pelo paciente sem precisar da
+                    necessidade de que o enfermeiro vá até o quarto para escutar a
+                    queixa
+                </p>
+                <p>
+                    Solução: Criação de um app que transmite uma requisição de
+                    Alimentos ou Reclamações de dores visando o cenário de internação,
+                    onde o paciente se encontra no quarto com poucas ações disponíveis
+                    e precisa de serviços do enfermeiro sem precisar da necessidade de
+                    que o enfermeiro vá até o quarto para escutar a queixa, assim
+                    agilizando o processo e a necessidade do paciente
+                </p>
+            </div>
             @RenderBody()
         </main>
     </div>
-    <partial name ="_Loginpartial"/>
+
     <footer class="border-top footer text-muted">
         <div class="container">
             &copy; 2023 - GlobalSolution - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>

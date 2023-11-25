@@ -24,11 +24,8 @@ namespace GlobalSolution.Migrations
 
             modelBuilder.Entity("GlobalSolution.Models.Feedback", b =>
                 {
-                    b.Property<long>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
+                    b.Property<string>("Id")
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<DateTime>("DataEnvio")
                         .HasColumnType("datetime2");
@@ -39,13 +36,29 @@ namespace GlobalSolution.Migrations
 
                     b.Property<string>("UsuarioId")
                         .IsRequired()
-                        .HasColumnType("nvarchar(450)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("UsuarioId");
-
                     b.ToTable("Feedback");
+                });
+
+            modelBuilder.Entity("GlobalSolution.Models.Paciente", b =>
+                {
+                    b.Property<string>("nome")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("dataNasc")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("telefone")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("nome");
+
+                    b.ToTable("Paciente");
                 });
 
             modelBuilder.Entity("GlobalSolution.Models.Pedido", b =>
@@ -68,6 +81,10 @@ namespace GlobalSolution.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("Nome")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Status")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
@@ -170,8 +187,6 @@ namespace GlobalSolution.Migrations
                         .HasFilter("[NormalizedUserName] IS NOT NULL");
 
                     b.ToTable("AspNetUsers", (string)null);
-
-                    b.UseTptMappingStrategy();
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
@@ -311,36 +326,6 @@ namespace GlobalSolution.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
-            modelBuilder.Entity("GlobalSolution.Models.Paciente", b =>
-                {
-                    b.HasBaseType("GlobalSolution.Models.Usuario");
-
-                    b.Property<string>("dataNasc")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("nome")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("telefone")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.ToTable("Paciente");
-                });
-
-            modelBuilder.Entity("GlobalSolution.Models.Feedback", b =>
-                {
-                    b.HasOne("GlobalSolution.Models.Usuario", "Usuario")
-                        .WithMany()
-                        .HasForeignKey("UsuarioId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Usuario");
-                });
-
             modelBuilder.Entity("GlobalSolution.Models.Prontuario", b =>
                 {
                     b.HasOne("GlobalSolution.Models.Paciente", "Paciente")
@@ -399,15 +384,6 @@ namespace GlobalSolution.Migrations
                     b.HasOne("GlobalSolution.Models.Usuario", null)
                         .WithMany()
                         .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("GlobalSolution.Models.Paciente", b =>
-                {
-                    b.HasOne("GlobalSolution.Models.Usuario", null)
-                        .WithOne()
-                        .HasForeignKey("GlobalSolution.Models.Paciente", "Id")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });

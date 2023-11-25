@@ -1,4 +1,6 @@
-﻿#nullable disable
+﻿// Licensed to the .NET Foundation under one or more agreements.
+// The .NET Foundation licenses this file to you under the MIT license.
+#nullable disable
 
 using System;
 using System.Collections.Generic;
@@ -10,14 +12,13 @@ using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
-using GlobalSolution.Areas.Identity.Data;
+using GlobalSolution.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.Extensions.Logging;
-using GlobalSolution.Models;
 
 namespace GlobalSolution.Areas.Identity.Pages.Account
 {
@@ -44,16 +45,19 @@ namespace GlobalSolution.Areas.Identity.Pages.Account
             _logger = logger;
             _emailSender = emailSender;
         }
-
         [BindProperty]
         public InputModel Input { get; set; }
+
+        
         public string ReturnUrl { get; set; }
 
+      
         public IList<AuthenticationScheme> ExternalLogins { get; set; }
 
+      
         public class InputModel
         {
-            
+           
             [Required]
             [EmailAddress]
             [Display(Name = "Email")]
@@ -65,6 +69,7 @@ namespace GlobalSolution.Areas.Identity.Pages.Account
             [Display(Name = "Password")]
             public string Password { get; set; }
 
+            
             [DataType(DataType.Password)]
             [Display(Name = "Confirm password")]
             [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]

@@ -1,0 +1,60 @@
+﻿@model Pedido
+
+<h1>Cadastro de Pedido</h1>
+
+<form asp-action="AdicionarPedido" method="post">
+    <div class="form-group">
+        <label asp-for="Nome">Nome</label>
+        <input asp-for="Nome" class="form-control" />
+        <span asp-validation-for="Nome" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="FoiAceito">Foi Aceito</label>
+        <select asp-for="FoiAceito" class="form-control">
+            <option value="true">Sim</option>
+            <option value="false">Não</option>
+        </select>
+        <span asp-validation-for="FoiAceito" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="NivelDor">Nível de Dor</label>
+        <input asp-for="NivelDor" type="number" class="form-control" />
+        <span asp-validation-for="NivelDor" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="LocalDor">Local da Dor</label>
+        <input asp-for="LocalDor" class="form-control" />
+        <span asp-validation-for="LocalDor" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="TipoMedicacao">Tipo de Medicação</label>
+        <input asp-for="TipoMedicacao" class="form-control" />
+        <span asp-validation-for="TipoMedicacao" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="Temperatura">Temperatura</label>
+        <input asp-for="Temperatura" class="form-control" />
+        <span asp-validation-for="Temperatura" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="Acompanhante">Acompanhante</label>
+        <input asp-for="Acompanhante" class="form-control" />
+        <span asp-validation-for="Acompanhante" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="TipoComida">Tipo de Comida</label>
+        <input asp-for="TipoComida" class="form-control" />
+        <span asp-validation-for="TipoComida" class="text-danger"></span>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Cadastrar</button>
+</form>
+
+<a asp-controller="Pedido" asp-action="Index">Voltar para a Lista de Pedidos</a>

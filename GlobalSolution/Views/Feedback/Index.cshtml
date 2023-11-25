@@ -1,0 +1,21 @@
+﻿@*
+    @model IEnumerable<Feedback>
+*@
+@{
+    
+
+    <h1>Feedbacks</h1>
+
+    @foreach (var feedback in Model)
+    {
+        <div>
+            <p>@feedback.Mensagem</p>
+            <p>@feedback.UsuarioId</p>
+            <p>@feedback.DataEnvio.ToString("dd/MM/yyyy HH:mm:ss")</p>
+        </div>
+    }
+
+    <a asp-action="EnviarFeedback">Enviar Feedback</a>
+
+
+}

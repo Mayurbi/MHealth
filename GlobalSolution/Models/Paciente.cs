@@ -4,8 +4,9 @@ using System.ComponentModel.DataAnnotations.Schema;
 namespace GlobalSolution.Models
 {
     [Table("Paciente")]
-    public class Paciente : Usuario
+    public class Paciente 
     {
+        [Key]
         [Required]
         public string nome { get; set; }
         [Required]

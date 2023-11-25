@@ -10,7 +10,7 @@ namespace GlobalSolution.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class PedidosController : Controller
+    public class PedidosController : ControllerBase
     {
         private MySQLContext _context;
         private IMapper _mapper;
@@ -112,6 +112,26 @@ namespace GlobalSolution.Controllers
             _context.SaveChanges();
 
             return NoContent();
+        }
+
+
+        [HttpGet("BuscarPorStatus")]
+        public IEnumerable<LerPedidoDto> BuscarPedidosPorStatus([FromQuery] string status)
+        {
+            if (string.IsNullOrEmpty(status))
+            {
+                return (IEnumerable<LerPedidoDto>)BadRequest("O parâmetro 'status' não pode ser nulo ou vazio.");
+            }
+
+            return _mapper.Map<List<LerPedidoDto>>(_context.Pedidos.Where(pedido => pedido.Status == status));
+        }
+
+        [HttpGet("MediaNivelDor")]
+        public IActionResult CalcularMediaNivelDorPedidos()
+        {
+            var mediaNivelDor = _context.Pedidos.Average(pedido => pedido.NivelDor);
+
+            return Ok(new { MediaNivelDor = mediaNivelDor });
         }
 
     }

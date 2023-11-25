@@ -1,0 +1,31 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+    @model Feedback
+
+    <h1>Enviar Feedback</h1>
+
+    <form asp-action="EnviarFeedback" method="post">
+        <div>
+            <label asp-for="Mensagem"></label>
+            <textarea asp-for="Mensagem" class="form-control" rows="4"></textarea>
+            <span asp-validation-for="Mensagem" class="text-danger"></span>
+        </div>
+
+        <div>
+            <label asp-for="UsuarioId"></label>
+            <input asp-for="UsuarioId" class="form-control" />
+            <span asp-validation-for="UsuarioId" class="text-danger"></span>
+        </div>
+
+        <button type="submit">Enviar</button>
+  
+        <div class="form-group">
+            <label asp-for="DataEnvio">Data de Envio</label>
+            <formatted-datetime datetime="@Model.DataEnvio"></formatted-datetime>
+        </div>
+
+        <button type="submit" class="btn btn-primary">Enviar Feedback</button>
+    </form>
+}

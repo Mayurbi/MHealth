@@ -11,7 +11,7 @@ namespace GlobalSolution.Controllers;
 
 [Route("api/[controller]")]
 [ApiController]
-public class UsuarioController : Controller
+public class UsuarioController : ControllerBase
 {
     private MySQLContext _context;
     private IMapper _mapper;
@@ -24,7 +24,7 @@ public class UsuarioController : Controller
     }
 
     [HttpPost]
-    public IActionResult AdicionaUsuario([FromBody] CriarUserDto usuarioDto)
+    public IActionResult AdicionarUsuario([FromBody] CriarUserDto usuarioDto)
     {
         Usuario usuario = _mapper.Map<Usuario>(usuarioDto);
 
@@ -117,5 +117,34 @@ public class UsuarioController : Controller
         _context.SaveChanges();
 
         return NoContent();
+
     }
+    [HttpGet("search")]
+    public IEnumerable<LerUserDto> SearchUsers([FromQuery] string term)
+    {
+        if (string.IsNullOrEmpty(term))
+        {
+            return _mapper.Map<List<LerUserDto>>(_context.Usuarios);
+        }
+
+
+        return _mapper.Map<List<LerUserDto>>(_context.Usuarios.Where(usuario =>
+            usuario.Id.Contains(term) || usuario.Email.Contains(term)));
+    }
+
+   // [HttpGet("dashboard")]
+  //  public IActionResult Dashboard()
+   // {
+
+   //     var totalUsuarios = _context.Usuarios.Count();
+   //     var usuariosAtivos = _context.Usuarios.Count(usuario => usuario.Ativo);
+
+   //     var dashboardInfo = new
+     //       TotalUsuarios = totalUsuarios,
+     //       UsuariosAtivos = usuariosAtivos
+
+      //  };
+
+    //    return Ok(dashboardInfo);
+   // }//
 }
